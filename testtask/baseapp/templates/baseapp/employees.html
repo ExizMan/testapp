@@ -1,7 +1,10 @@
 {% extends "baseapp/base.html" %}
 {% block content%}
 {% for employee in employees %}
-    <li> {{employee}} </li>
+    <li> {{employee}}
+        <a href="{% url 'baseapp:employee' employee.id%}"> изменить </a>
+        <a href="{% url 'baseapp:employee' employee.id%}"> удалить </a>
+    </li>
 {% endfor %}
 
 {% endblock content%}
