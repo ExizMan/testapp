@@ -1,0 +1,4 @@
+body{ font-family: Verdana;}
+h1{color:navy;}
+img{width:350px;}
+nav{display:flex; justify-content:space-around;}
