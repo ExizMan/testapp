@@ -1,0 +1,9 @@
+{% extends "baseapp/base.html" %}
+{% block content %}
+    <p>Добавить сотрудника:</p>
+    <form action="{% url 'baseapp:new_employee' %}" method="post">
+        {% csrf_token %}
+        {{form.as_p}}
+        <button name="submit"> Добавить</button>
+    </form>
+{% endblock content %}

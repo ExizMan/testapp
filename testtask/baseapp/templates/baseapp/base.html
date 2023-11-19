@@ -8,9 +8,15 @@
 </head>
 <body>
 <nav>
-<a href="{% url 'baseapp:employees' %}">  Сотрудники </a>
-<a href="{% url 'baseapp:professions' %}">  Должности </a>
+        <div>
+        <a href="{% url 'baseapp:employees' %}">  Сотрудники </a>
+        <a href="{% url 'baseapp:new_employee' %}"> Добавить сотрудника  </a>
+        </div>
+        <div>
+        <a href="{% url 'baseapp:professions' %}">  Должности </a>
+            <div>
 </nav>
+
 
 </body>
 </html>

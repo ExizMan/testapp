@@ -3,7 +3,7 @@
 {% for employee in employees %}
     <li> {{employee}}
         <a href="{% url 'baseapp:employee' employee.id%}"> изменить </a>
-        <a href="{% url 'baseapp:employee' employee.id%}"> удалить </a>
+        <a href="{% url 'baseapp:del_employee' employee.id%}"> удалить </a>
     </li>
 {% endfor %}
 
