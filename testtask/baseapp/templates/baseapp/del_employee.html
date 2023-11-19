@@ -3,7 +3,7 @@
 
 {% extends "baseapp/base.html" %}
 {% block content %}
-    <p>Добавить сотрудника:</p>
+
 <form method="post" action="{% url 'baseapp:del_employee' employee.id %}">
     {% csrf_token %}
     Вы точно хотите удалить {{employee}}&
