@@ -11,7 +11,7 @@ class EmployeeForm(forms.ModelForm):
     class Meta:
         model = Employees
         fields = ['firstname', 'midname', 'lastname', 'profession']
-        labels = {'firstname':'Имя', 'midname':'Отчество', 'lastname':'Фамилия', 'profession':'Должность'}
+        labels = {'firstname': 'Имя', 'midname': 'Отчество(необязательно)', 'lastname':'Фамилия', 'profession': 'Должность'}
 
     def clean_firstname(self):
         firstname = self.cleaned_data['firstname']
@@ -39,3 +39,11 @@ class EmployeeForm(forms.ModelForm):
             raise forms.ValidationError("Пишите все в правильных полях")
         return lastname.title()
 
+
+class ProfessonsForm(forms.ModelForm):
+    def __init__(self,*args,**kwargs):
+        super().__init__(*args,**kwargs)
+
+    class Meta:
+        fields = ['tittle']
+        labels = {'tittle': 'Должность'}
