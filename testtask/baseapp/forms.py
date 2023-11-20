@@ -48,7 +48,7 @@ class ProfessonsForm(forms.ModelForm):
 
     def clean_tittle(self):
         tittle = self.cleaned_data['tittle']
-        if bool(re.search(r'[<>?;:{} \[ \] ]', tittle)):
+        if bool(re.search(r'[<>?;:{}\[\]]', tittle)):
             raise forms.ValidationError("Вы используете какие-то подозрительные символы :/")
-        return tittle.title()
+        return tittle
 

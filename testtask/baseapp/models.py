@@ -15,7 +15,7 @@ class Employees(models.Model):
     firstname = models.CharField(max_length=20, blank=False)
     midname = models.CharField(max_length=20, blank=True, null=True)
     lastname = models.CharField(max_length=20, blank=False)
-    profession = models.ForeignKey(Professions, on_delete=models.PROTECT, related_name='professions', to_field='tittle')
+    profession = models.ForeignKey(Professions, default="без должности", on_delete=models.SET_DEFAULT, related_name='professions', to_field='tittle')
     date_hired = models.DateField(auto_now_add=True)
 
     class Meta:

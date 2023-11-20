@@ -3,8 +3,10 @@
 {% for profession in professions %}
     <li>
         {{profession}}
-        <a href="{% url 'baseapp:profession' profession.id%}"> изменить </a>
-        <a href="{% url 'baseapp:del_profession' profession.id%}"> удалить </a>
+        {% if not profession.tittle == "без должности" %}
+            <a href="{% url 'baseapp:profession' profession.id%}"> изменить </a>
+            <a href="{% url 'baseapp:del_profession' profession.id%}"> удалить </a>
+        {% endif %}
     </li>
 {% endfor %}
 

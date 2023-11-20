@@ -6,7 +6,7 @@
 
 <form method="post" action="{% url 'baseapp:del_profession' profession.id %}">
     {% csrf_token %}
-    Вы точно хотите удалить должность{{profession}}?
+    Вы точно хотите удалить должность {{profession}}?
     <button type="submit">Удалить</button>
 </form>
 {% endblock content %}
