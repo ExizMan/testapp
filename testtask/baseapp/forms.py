@@ -1,8 +1,9 @@
+import re
 from django import forms
 from .models import Employees, Professions
 from django.core.exceptions import ValidationError
 lat = 'qwertyuioasdfghjklzxcvbnm'
-tags = r'[];'""',./'
+tags = r'^[a-zA-Z0-9_.+-]$'
 
 class EmployeeForm(forms.ModelForm):
     def __init__(self,*args,**kwargs):
@@ -13,22 +14,29 @@ class EmployeeForm(forms.ModelForm):
         fields = ['firstname', 'midname', 'lastname', 'profession']
         labels = {'firstname':'Имя', 'midname':'Отчество', 'lastname':'Фамилия', 'profession':'Должность'}
 
-    def clean_title(self):
-        # cleaned_data = super(EmployeeForm, self).clean()
-        # firstname = cleaned_data.get("firstname")
-        # midname = cleaned_data.get("midname")
-        # lastname = cleaned_data.get("lastname")
-        # if lat in firstname:
-        #     raise ValidationError("Используйте только латиницу")
-        # if lat in midname:
-        #     raise ValidationError("Используйте только латиницу")
-        # if lat in lastname:
-        #     raise ValidationError("Используйте только латиницу")
-        # if tags in firstname:
-        #     raise ValidationError("Не используйте теги")
-        # if tags in midname:
-        #     raise ValidationError("Не используйте теги")
-        # if tags in lastname:
-        #     raise ValidationError("Не используйте теги")
+    def clean_firstname(self):
+        firstname = self.cleaned_data['firstname']
+        if bool(re.search('[A-Za-z0-9]', firstname)):
+            raise forms.ValidationError("Используйте только кириллицу")
 
+        if bool(re.search('\s', firstname)):
+            raise forms.ValidationError("Пишите все в правильных полях")
+        return firstname.title()
+    def clean_midname(self):
+        midname= self.cleaned_data['midname']
+        if midname is None:
+            return None
+        if bool(re.search('[A-Za-z0-9]', midname)):
+            raise forms.ValidationError("Используйте только кириллицу")
+        if bool(re.search('\s', midname)):
+            raise forms.ValidationError("Пишите все в правильных полях")
+        return midname.title()
+
+    def clean_lastname(self):
+        lastname = self.cleaned_data['lastname']
+        if bool(re.search('[A-Za-z0-9]', lastname)):
+            raise forms.ValidationError("Используйте только кириллицу")
+        if bool(re.search('\s', lastname)):
+            raise forms.ValidationError("Пишите все в правильных полях")
+        return lastname.title()
 
