@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect
-from .models import Employees,Professions
+from .models import Employees, Professions
 from .forms import EmployeeForm, ProfessonsForm
 
 
@@ -11,7 +11,7 @@ def index(request):
 
 def employees(request):
     employees = Employees.objects.order_by()
-    context = {'employees' : employees}
+    context = {'employees': employees}
     return render(request, 'baseapp/employees.html', context)
 
 
@@ -25,9 +25,7 @@ def employee(request, emp_id):
         if form.is_valid():
             form.save()
             sublabel = 'изменения приняты'
-
-
-    context = {'form': form, 'employee':employee, 'sublabel':sublabel}
+    context = {'form': form, 'employee': employee, 'sublabel': sublabel}
     return render(request, 'baseapp/employee.html',context)
 
 
@@ -77,3 +75,27 @@ def new_profession(request):
     context = {'form': form, 'sublabel': sublabel}
     # !!!
     return render(request, 'baseapp/new_profession.html', context)
+
+
+def profession(request, prof_id):
+    profession = Professions.objects.get(id=prof_id)
+    if request.method == 'GET':
+        form = ProfessonsForm(instance=profession)
+        sublabel = 'ждем изменений'
+    else:
+        form = ProfessonsForm(instance=profession, data=request.POST)
+        if form.is_valid():
+            form.save()
+            sublabel = 'изменения приняты'
+    context = {'form': form, 'profession':profession, 'sublabel':sublabel}
+    return render(request, 'baseapp/profession.html', context)
+
+
+def del_profession(request, prof_id):
+    profession = Professions.objects.get(id=prof_id)
+    if request.method == 'POST':
+        profession.delete()
+        return redirect('baseapp:professions')
+    else:
+        context = {'profession': profession}
+        return render(request, 'baseapp/del_profession.html', context)

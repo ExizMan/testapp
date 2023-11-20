@@ -1,0 +1,10 @@
+{% extends "baseapp/base.html" %}
+{% block content%}
+<form action="{% url 'baseapp:profession' profession.id %}"method='post'>
+    {% csrf_token %}
+    {{form.as_p}}
+    <button name="submit">Обновить данные</button>
+</form>
+{{sublabel}}
+
+{% endblock content%}

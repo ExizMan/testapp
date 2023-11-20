@@ -6,7 +6,7 @@
 
 <form method="post" action="{% url 'baseapp:del_employee' employee.id %}">
     {% csrf_token %}
-    Вы точно хотите удалить {{employee}}&
+    Вы точно хотите удалить {{employee}}?
     <button type="submit">Удалить</button>
 </form>
 {% endblock content %}
