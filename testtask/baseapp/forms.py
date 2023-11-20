@@ -2,8 +2,7 @@ import re
 from django import forms
 from .models import Employees, Professions
 from django.core.exceptions import ValidationError
-lat = 'qwertyuioasdfghjklzxcvbnm'
-tags = r'^[a-zA-Z0-9_.+-]$'
+
 
 class EmployeeForm(forms.ModelForm):
     def __init__(self,*args,**kwargs):
