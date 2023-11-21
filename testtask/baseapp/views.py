@@ -80,13 +80,12 @@ def new_profession(request):
         if form.is_valid():
             form.save()
         sublabel = f'вы добавили должность {request.POST.get("tittle")}'
-            # return redirect('baseapp:employees')
     context = {'form': form, 'sublabel': sublabel}
-    # !!!
     return render(request, 'baseapp/new_profession.html', context)
 
 
 def profession(request, prof_id):
+    sublabel = None
     profession = Professions.objects.get(id=prof_id)
     if request.method == 'GET':
         form = ProfessonsForm(instance=profession)
@@ -96,6 +95,8 @@ def profession(request, prof_id):
         if form.is_valid():
             form.save()
             sublabel = 'изменения приняты'
+    if sublabel is None:
+        sublabel = "Похоже, вы неправильно изменили форму"
     context = {'form': form, 'profession':profession, 'sublabel':sublabel}
     return render(request, 'baseapp/profession.html', context)
 
