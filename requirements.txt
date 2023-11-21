@@ -1,0 +1,10 @@
+asgiref==3.7.2
+dj-database-url==2.1.0
+Django==4.2.7
+django-on-heroku==1.1.2
+django-shell-plus==1.1.7
+psycopg2-binary==2.9.9
+setuptools==68.2.2
+sqlparse==0.4.4
+typing_extensions==4.8.0
+whitenoise==6.6.0
