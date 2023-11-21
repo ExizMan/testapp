@@ -1,7 +1,13 @@
 from django.db import models
 
+
+class ProfessionsManager(models.Manager):
+    def create_profession(self, tittle):
+        profession = self.create(tittle=tittle)
+        return profession
 class Professions(models.Model):
-    tittle = models.CharField(max_length=20, unique=True)
+    tittle = models.CharField(max_length=20, unique=True, default='без должности')
+    objects = ProfessionsManager()
 
     class Meta:
         db_table = 'professions'

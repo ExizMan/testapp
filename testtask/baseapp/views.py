@@ -1,6 +1,8 @@
+from django.db import IntegrityError
 from django.shortcuts import render, redirect
 from .models import Employees, Professions
 from .forms import EmployeeForm, ProfessonsForm
+
 
 
 def index(request):
@@ -16,6 +18,7 @@ def employees(request):
 
 
 def employee(request, emp_id):
+    sublabel = None
     employee = Employees.objects.get(id=emp_id)
     if request.method == 'GET':
         form = EmployeeForm(instance=employee)
@@ -25,8 +28,10 @@ def employee(request, emp_id):
         if form.is_valid():
             form.save()
             sublabel = 'изменения приняты'
-    context = {'form': form, 'employee': employee, 'sublabel': sublabel}
-    return render(request, 'baseapp/employee.html',context)
+    if sublabel is None:
+        sublabel = "Похоже, вы неправильно изменили форму"
+    context = {'form': form, 'employee': employee, 'sublabel': str(sublabel)}
+    return render(request, 'baseapp/employee.html', context)
 
 
 def new_employee(request):
@@ -40,7 +45,11 @@ def new_employee(request):
 
             sublabel = f'вы добавили сотрудника {request.POST.get("lastname")}'
             #return redirect('baseapp:employees')
+
+    if sublabel is None:
+        sublabel = "Похоже, вы неправильно изменили форму"
     context = {'form': form, 'sublabel': sublabel}
+
     return render(request,'baseapp/new_employee.html', context)
 
 
@@ -93,9 +102,18 @@ def profession(request, prof_id):
 
 def del_profession(request, prof_id):
     profession = Professions.objects.get(id=prof_id)
+    sublabel =""
     if request.method == 'POST':
-        profession.delete()
-        return redirect('baseapp:professions')
+        try:
+            profession.delete()
+            return redirect('baseapp:professions')
+        except IntegrityError:
+
+            profession_default = Professions.objects.create_profession('без должности')
+            profession_default.save()
+            profession.delete()
+            return redirect('baseapp:professions')
+
     else:
-        context = {'profession': profession}
+        context = {'profession': profession, 'sublabel':sublabel}
         return render(request, 'baseapp/del_profession.html', context)

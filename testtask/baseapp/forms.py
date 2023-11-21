@@ -15,7 +15,7 @@ class EmployeeForm(forms.ModelForm):
 
     def clean_firstname(self):
         firstname = self.cleaned_data['firstname']
-        if bool(re.search('[A-Za-z0-9]', firstname)):
+        if bool(re.search('[A-Za-z0-9,./<>?;:{}\[\]]', firstname)):
             raise forms.ValidationError("Используйте только кириллицу")
 
         if bool(re.search(r'\s', firstname)):
@@ -25,7 +25,7 @@ class EmployeeForm(forms.ModelForm):
         midname= self.cleaned_data['midname']
         if midname is None:
             return None
-        if bool(re.search('[A-Za-z0-9]', midname)):
+        if bool(re.search('[A-Za-z0-9,./<>?;:{}\[\]]', midname)):
             raise forms.ValidationError("Используйте только кириллицу")
         if bool(re.search(r'\s', midname)):
             raise forms.ValidationError("Пишите все в правильных полях")
@@ -33,7 +33,7 @@ class EmployeeForm(forms.ModelForm):
 
     def clean_lastname(self):
         lastname = self.cleaned_data['lastname']
-        if bool(re.search(r'[A-Za-z0-9,./<>?;:{} \[ \] ]', lastname)):
+        if bool(re.search(r'[A-Za-z0-9,./<>?;:{}\[\]]', lastname)):
             raise forms.ValidationError("Используйте только кириллицу")
         if bool(re.search(r'\s', lastname)):
             raise forms.ValidationError("Пишите все в правильных полях")
